@@ -47,4 +47,8 @@ public class SumatorioNumberException extends Exception {
 	public SumatorioNumberException(String mensaje, Throwable causa) {
 		super(mensaje, causa);
 	}
+
+	public void getMessage(String string) {
+
+	}
 }

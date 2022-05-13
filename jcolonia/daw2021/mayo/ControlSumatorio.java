@@ -1,5 +1,6 @@
 package jcolonia.daw2021.mayo;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -27,16 +28,20 @@ public class ControlSumatorio {
 	 */
 	private Scanner entrada;
 
-	private ListaNúmeros conjunto;
+	private ListaNúmeros conjunto = new ListaNúmeros();;
 
 	private VistaMenúBásico menúPrincipal;
-
+	
+	String texto;
+	ArrayList <String> listaString;
+	ArrayList <Double> listaNums = new ArrayList <Double>();
 	public ControlSumatorio(Scanner in) {
 		this.entrada = in;
-		conjunto = new ListaNúmeros();
+
+		listaString = new ArrayList<String>();
 	}
 
-	private void buclePrincipal() {
+	private void buclePrincipal() throws SumatorioNumberException {
 		int opciónElegida;
 		boolean fin = false;
 
@@ -52,18 +57,18 @@ public class ControlSumatorio {
 				fin = true;
 				Vista.mostrarAviso("¡¡¡A-D-I-O-S!!");
 				break;
-//			case 1: // Opción 1: Entrada datos
-//				cargarSumando();
-//				break;
-//			case 2: // Opción 2: Mostrar sumandos
-//				mostrarSumandos();
-//				break;
-//			case 3: // Opción 3: Mostrar suma
-//				mostrarSuma();
-//				break;
-//			case 4: // Opción 4: Reset
-//				restablecer();
-//				break;
+				
+			case 1: cargarSumando();
+					break;
+				
+			case 2:  mostrarSumandos();
+					break;
+				
+			case 3: mostrarSuma();
+				break;
+			case 4:
+			restablecer();
+				break;
 			default: // Opción no esperada: abortar
 				ejecutarGenérico(opciónElegida);
 				System.err.println("Error interno de programa - operación pendiente de desarrollo");
@@ -72,13 +77,37 @@ public class ControlSumatorio {
 		} while (!fin);
 	}
 
+	
+
+
+
+	private void restablecer() {
+		conjunto.restablecerListas();
+	}
+
+	public void cargarSumando() throws SumatorioNumberException {
+		VistaAltas cargarNum = new VistaAltas(texto, entrada);
+		cargarNum.cargarNúmeros();
+		listaNums = conjunto.getLista();
+
+	}
+	
+	public void mostrarSumandos() {
+		VistaListado listado = new VistaListado(texto, entrada);
+		listado.mostrarListado(conjunto.getLista());
+	}
+	
+	public void mostrarSuma() {
+		VistaListado listado = new VistaListado(texto, entrada);
+		listado.sumaFormateada();
+	}
 	private void ejecutarGenérico(int id) {
 		String mensaje;
 		mensaje = String.format("%n  Ha elegido la opción %d: «%s»", id, OPCIONES_MENÚ_PRINCIPAL[id - 1]);
 		Vista.mostrarTexto(mensaje);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SumatorioNumberException {
 		Scanner entrada = new Scanner(System.in);
 
 		ControlSumatorio control = new ControlSumatorio(entrada);

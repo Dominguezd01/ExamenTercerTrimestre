@@ -130,6 +130,11 @@ public class ListaNúmeros {
 	public int getNúmSumandos() {
 		return lista.size();
 	}
+	
+	public ArrayList<Double> getLista() {
+		
+		return lista;
+	}
 
 	/**
 	 * Suma todos los valores almacenados.
@@ -138,7 +143,7 @@ public class ListaNúmeros {
 	 */
 	public double getSuma() {
 		double suma = .0;
-		for (double valor : lista) {
+		for (double valor : getLista()) {
 			suma += valor;
 		}
 		return suma;
@@ -161,7 +166,10 @@ public class ListaNúmeros {
 
 		return listaTextos;
 	}
-
+	
+	public void restablecerListas() {
+		lista.removeAll(lista);
+	}
 	/**
 	 * Produce una representación textual de la suma con los valores alineados.
 	 * 
